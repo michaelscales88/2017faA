@@ -60,15 +60,15 @@ bool IntSet::isEmpty() const
 
 bool IntSet::contains(int anInt) const
 {
-bool found = false;
-if (used > 0)
-{
-	for (int i = 0; i < used; i++)
+	bool found = false;
+	if (used > 0)
 	{
-	found = (data[i] == anInt);
-	// Stop looking if found
-	if (found) { break; }
-	}
+		for (int i = 0; i < used; i++)
+		{
+			found = (data[i] == anInt);
+			// Stop looking if found
+			if (found) { break; }
+		}
 	}
 	return found;
 }

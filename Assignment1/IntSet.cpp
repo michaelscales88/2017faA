@@ -78,15 +78,17 @@ bool IntSet::contains(int anInt) const
 bool IntSet::isSubsetOf(const IntSet& otherIntSet) const
 {
    bool isSubset = true;
-   if (isEmpty()) {}
-   else
+
+   if (! isEmpty()) 
    {
       for (int i = 0; i < used; i++)
+      {
          if (! otherIntSet.contains(data[i]))
          {
             isSubset = false;
             break;
          }
+      }
    }
    return isSubset;
 }
@@ -105,6 +107,7 @@ IntSet IntSet::unionWith(const IntSet& otherIntSet) const
 {
    IntSet thisSet = *this;
    assert(size() + (otherIntSet.subtract(thisSet)).size() <= MAX_SIZE);
+
    for (int i = 0; i < otherIntSet.size(); i++)
       thisSet.add(otherIntSet.data[i]);
 
@@ -140,13 +143,15 @@ void IntSet::reset()
 bool IntSet::add(int anInt)
 {
    // Check used > 0 and membership
-   bool hasInt = contains(anInt);
+   bool containsInt = contains(anInt);
 
-   assert(hasInt ? size() <= MAX_SIZE : size() < MAX_SIZE);
+   assert(containsInt ? size() <= MAX_SIZE : size() < MAX_SIZE);
 
    bool success = false;
-   if (! hasInt)
+
+   if (! containsInt)
    {
+      // Only add distinct elements
       data[used] = anInt;
       used++;
       success = true;
@@ -161,7 +166,10 @@ bool IntSet::remove(int anInt)
    // Check used > 0 and membership
    if (contains(anInt))
    {
+      // Remove an item from the list
       used--;
+      // If the array  had more than one element
+      // shift remaining elements left
       if (size() > 1)
       {
          int removeIdx;
@@ -180,9 +188,10 @@ bool IntSet::remove(int anInt)
 bool equal(const IntSet& is1, const IntSet& is2)
 {
    bool isEqual = false;
+   // Empty sets are equal
    if (is1.isEmpty() && is2.isEmpty()) { isEqual = true; }
-   else if (is1.size() != is2.size()) { isEqual = false; }
-   else
+   // Must have equal number of member elements
+   else if (is1.size() == is2.size()) 
    {
       isEqual = is1.isSubsetOf(is2) && is2.isSubsetOf(is1);
    }

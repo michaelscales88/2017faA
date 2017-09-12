@@ -105,9 +105,8 @@ IntSet IntSet::unionWith(const IntSet& otherIntSet) const
 {
    IntSet thisSet = *this;
    assert(size() + (otherIntSet.subtract(thisSet)).size() <= MAX_SIZE);
-
    for (int i = 0; i < otherIntSet.size(); i++)
-     thisSet.add(otherIntSet.data[i]);
+      thisSet.add(otherIntSet.data[i]);
 
    return thisSet;
 }
@@ -115,15 +114,21 @@ IntSet IntSet::unionWith(const IntSet& otherIntSet) const
 IntSet IntSet::intersect(const IntSet& otherIntSet) const
 {
    IntSet thisSet = *this;
-   thisSet.subtract(otherIntSet);
+   int temp;
+
+   for (int i = thisSet.size(); i >= 0; i--)
+   {
+      temp = thisSet.data[i];
+      if (! otherIntSet.contains(temp)) { thisSet.remove(temp); }
+   }
    return thisSet;
 }
 
 IntSet IntSet::subtract(const IntSet& otherIntSet) const
 {
    IntSet thisSet = *this;
-   for (int i = 0; i < otherIntSet.size(); i++)
-     thisSet.remove(otherIntSet.data[i]);
+   for (int i = 0; i < otherIntSet.size() ; i++)
+      thisSet.remove(otherIntSet.data[i]);
    return thisSet;
 }
 
@@ -162,7 +167,7 @@ bool IntSet::remove(int anInt)
       for (removeIdx = 0; removeIdx < used; removeIdx++)
          if (data[removeIdx] == anInt) { break; }
 
-      if (removeIdx == 0 || removeIdx == lastPosition) {}
+      if (removeIdx == lastPosition) {}
       else
       {
          int shiftUnits = lastPosition - removeIdx;

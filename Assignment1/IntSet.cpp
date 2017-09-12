@@ -116,9 +116,9 @@ IntSet IntSet::intersect(const IntSet& otherIntSet) const
    IntSet thisSet = *this;
    int temp;
 
-   for (int i = thisSet.size(); i >= 0; i--)
+   for (int i = size(); i > 0; i--)
    {
-      temp = thisSet.data[i];
+      temp = thisSet.data[i - 1];
       if (! otherIntSet.contains(temp)) { thisSet.remove(temp); }
    }
    return thisSet;
@@ -161,23 +161,17 @@ bool IntSet::remove(int anInt)
    // Check used > 0 and membership
    if (contains(anInt))
    {
-      int removeIdx;
-      int lastPosition = used - 1;
-
-      for (removeIdx = 0; removeIdx < used; removeIdx++)
-         if (data[removeIdx] == anInt) { break; }
-
-      if (removeIdx == lastPosition) {}
-      else
-      {
-         int shiftUnits = lastPosition - removeIdx;
-
-         for (int i = 0; i < shiftUnits; i++)
-         {
-            data[removeIdx + i] = data[removeIdx + i + 1];
-         }
-      }
       used--;
+      if (size() > 1)
+      {
+         int removeIdx;
+
+         for (removeIdx = 0; removeIdx < used; removeIdx++)
+            if (data[removeIdx] == anInt) { break; }
+
+         for (int i = removeIdx; i < used; ++i)
+            data[i] = data[i + 1];
+      }
       success = true;
    }
    return success; 

@@ -130,6 +130,7 @@ IntSet IntSet::intersect(const IntSet& otherIntSet) const
 IntSet IntSet::subtract(const IntSet& otherIntSet) const
 {
    IntSet thisSet = *this;
+
    for (int i = 0; i < otherIntSet.size() ; i++)
       thisSet.remove(otherIntSet.data[i]);
    return thisSet;
@@ -162,13 +163,12 @@ bool IntSet::add(int anInt)
 bool IntSet::remove(int anInt)
 {
    bool success = false;
-
    // Check used > 0 and membership
    if (contains(anInt))
    {
       // Remove an item from the list
       used--;
-      // If the array  had more than one element
+      // If the array had more than one element
       // shift remaining elements left
       if (size() > 1)
       {
@@ -190,7 +190,6 @@ bool equal(const IntSet& is1, const IntSet& is2)
    bool isEqual = false;
    // Empty sets are equal
    if (is1.isEmpty() && is2.isEmpty()) { isEqual = true; }
-   // Must have equal number of member elements
    else if (is1.size() == is2.size()) 
    {
       isEqual = is1.isSubsetOf(is2) && is2.isSubsetOf(is1);

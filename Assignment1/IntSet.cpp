@@ -170,7 +170,7 @@ bool IntSet::remove(int anInt)
       used--;
       // If the array had more than one element
       // shift remaining elements left
-      if (size() > 1)
+      if (! isEmpty())
       {
          int removeIdx;
 

@@ -89,7 +89,7 @@
 //           and false is returned.
 //
 // NON-MEMBER FUNCTIONS
-//   bool equal(const IntSet& is1, const IntSet& is2)
+//   bool operator==(const IntSet& is1, const IntSet& is2)
 //     Pre:  (none)
 //     Post: True is returned if is1 and is2 have the same elements,
 //           otherwise false is returned; for e.g.: {1,2,3}, {1,3,2},

@@ -97,6 +97,7 @@ void IntSet::resize(int new_capacity)
 IntSet::IntSet(int initial_capacity)
    :capacity(initial_capacity), used(0) 
 {
+   if (capacity < 1) { capacity = DEFAULT_CAPACITY; }
    // return a null ptr if new fails
    data =  new(nothrow) int[capacity];
 }
@@ -122,10 +123,13 @@ IntSet& IntSet::operator=(const IntSet& rhs)
    // check for self assignment
    if (this != &rhs)
    {
-      if (capacity != rhs.capacity)
-      {
-         resize(rhs.capacity);
-      }
+      delete [] data;
+      capacity = rhs.capacity;
+      used = rhs.used;
+      data = new(nothrow) int[rhs.capacity];
+
+      for (int i = 0; i < rhs.used; ++i)
+         data[i] = rhs.data[i];
    }
    return *this;
 }
@@ -227,10 +231,10 @@ bool IntSet::add(int anInt)
 {
    bool success = false;
    // Check used > 0 and membership
+   // Only add distinct elements
    if (! contains(anInt))
    {
       if (used == capacity) { resize(capacity * 1.25 + 1); }
-      //Only add distinct elements
       data[used] = anInt;
       ++used;
       success = true;
@@ -262,9 +266,7 @@ bool operator==(const IntSet& is1, const IntSet& is2)
    bool isEqual = false;
    // Empty sets are equal
    if (is1.isEmpty() && is2.isEmpty()) { isEqual = true; }
-   else if (is1.size() == is2.size())
-   {
-      isEqual = is1.isSubsetOf(is2) && is2.isSubsetOf(is1);
-   }
+   // 1-to-1 relationships are equal
+   else { isEqual = is1.isSubsetOf(is2) && is2.isSubsetOf(is1); }
    return isEqual;
 }

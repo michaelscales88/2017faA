@@ -80,11 +80,11 @@ using namespace std;
 void IntSet::resize(int new_capacity)
 {
    // check if we need to resize
-   bool diffCapacity = (new_capacity != capacity) ? true : false;
+   bool needsResize = (new_capacity != capacity) ? true : false;
 
-   if (diffCapacity && (new_capacity > used))
+   if (needsResize && (new_capacity > used))
    {
-      int* tempArray = new(nothrow) int[new_capacity]; 
+      int* tempArray = new(nothrow) int[new_capacity];
       for (int i = 0; i < used; ++i)
          tempArray[i] = data[i];
 
@@ -99,7 +99,6 @@ IntSet::IntSet(int initial_capacity)
 {
    // return a null ptr if new fails
    data =  new(nothrow) int[capacity];
-   // cout << "constructor" << endl;
 }
 
 IntSet::IntSet(const IntSet& src)
@@ -110,7 +109,6 @@ IntSet::IntSet(const IntSet& src)
 
    for (int i = 0; i < used; ++i)
       data[i] = src.data[i];
-   // cout << "copy constructor" << endl;
 }
 
 
@@ -121,14 +119,12 @@ IntSet::~IntSet()
 
 IntSet& IntSet::operator=(const IntSet& rhs)
 {
-   //cout << "hit operator=" << endl;
    // check for self assignment
    if (this != &rhs)
    {
-      for (int i = 0; i < rhs.used; ++i)
+      if (capacity != rhs.capacity)
       {
-         // cout << "adding " << rhs.data[i] << endl;
-         add(rhs.data[i]);
+         resize(rhs.capacity);
       }
    }
    return *this;
@@ -191,9 +187,7 @@ void IntSet::DumpData(ostream& out) const
 
 IntSet IntSet::unionWith(const IntSet& otherIntSet) const
 {
-   // cout << "start union" << endl;
    IntSet thisSet = *this;
-   // cout << "copied *this" << endl;
    for (int i = 0; i < otherIntSet.used; i++)
       thisSet.add(otherIntSet.data[i]);
 
@@ -204,11 +198,13 @@ IntSet IntSet::intersect(const IntSet& otherIntSet) const
 {
    IntSet thisSet = *this;
    int temp;
-
-   for (int i = size(); i > 0; i--)
+   for (int i = used; i > 0; --i)
    {
       temp = thisSet.data[i - 1];
-      if (! otherIntSet.contains(temp)) { thisSet.remove(temp); }
+      if (! otherIntSet.contains(temp)) 
+      {
+         thisSet.remove(temp); 
+      }
    }
    return thisSet;
 }
@@ -248,20 +244,14 @@ bool IntSet::remove(int anInt)
    // Check used > 0 and membership
    if (contains(anInt))
    {
-      // Remove an item from the list
+      for (int itemIdx = 0; itemIdx < used; ++itemIdx)
+         if (data[itemIdx] == anInt) 
+         {
+            for (int shiftPos = itemIdx; shiftPos < used; ++shiftPos)
+               data[shiftPos] = data[shiftPos + 1];
+            break;
+         }
       used--;
-      // If the array had more than one element
-      // shift remaing elements left
-      if (! isEmpty())
-      {
-         int removeIdx;
-
-         for (removeIdx = 0; removeIdx < used; ++removeIdx)
-            if (data[removeIdx] == anInt) { break; }
-
-         for (int i = removeIdx; i < used; ++i)
-            data[i] = data[i + 1];
-      }
       success = true;
    }
    return success;

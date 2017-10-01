@@ -56,6 +56,77 @@ namespace CS3358_FA2017
 
    sequence::sequence(const sequence& source)
    {
+      value_type* tempArray = new value_type[source.capacity];
+      for (int i = 0; i < source.used; i++)
+         tempArray[i] = source.data[i];
+
+      delete [] data;
+      data = tempArray;
+      used = source.used;
+      current_index = source.current_index;
+      capacity = source.capacity;
+   }
+
+   sequence::~sequence()
+   {
+      delete [] data;
+   }
+
+   // MODIFICATION MEMBER FUNCTIONS
+   void sequence::resize(size_type new_capacity)
+   {
+      // 
+      if (new_capacity < used) new_capacity = used;
+      if (new_capacity < 1) new_capacity = 1;
+
+      if (new_capacity != capacity)
+      {
+         value_type* tempArray = new value_type[new_capacity];
+         for (int i = 0; i < used; i++)
+            tempArray[i] = data[i];
+
+         delete [] data;
+         data = tempArray;
+         capacity = new_capacity;
+      }
+   }
+
+   void sequence::start()
+   {
+      current_index = 0;
+   }
+
+   void sequence::advance()
+   { 
+      if (is_item()) current_index++;
+   }
+
+   void sequence::insert(const value_type& entry)
+   {
+      used++;
+      for (int i = used - 1; i > current_index; i--)
+         data[i] = data[i - 1];
+      data[current_index] = entry;
+   }
+
+   void sequence::attach(const value_type& entry)
+   {
+      used++;
+      advance();
+      for (int i = used - 1; i > current_index; i--)
+         data[i] = data[i - 1];
+      data[current_index] = entry;
+   }
+
+   void sequence::remove_current()
+   {
+      for (int i = current_index; i < used; i++)
+         data[i] = data[i + 1];
+      used--;
+   }
+
+   sequence& sequence::operator=(const sequence& source)
+   {
       if (this != &source)
       {
          value_type* tempArray = new value_type[source.capacity];
@@ -71,65 +142,20 @@ namespace CS3358_FA2017
       return *this;
    }
 
-   sequence::~sequence()
-   {
-      delete [] data;
-   }
-
-   // MODIFICATION MEMBER FUNCTIONS
-   void sequence::resize(size_type new_capacity)
-   {
-      cout << "resize(size_type new_capacity) not implemented yet" << endl;
-   }
-
-   void sequence::start()
-   {
-      cout << "start() not implemented yet" << endl;
-   }
-
-   void sequence::advance()
-   {
-      cout << "advance() not implemented yet" << endl;
-   }
-
-   void sequence::insert(const value_type& entry)
-   {
-      cout << "insert(const value_type& entry) not implemented yet" << endl;
-   }
-
-   void sequence::attach(const value_type& entry)
-   {
-      cout << "attach(const value_type& entry) not implemented yet" << endl;
-   }
-
-   void sequence::remove_current()
-   {
-      cout << "remove_current() not implemented yet" << endl;
-   }
-
-   sequence& sequence::operator=(const sequence& source)
-   {
-      cout << "operator=(const sequence& source) not implemented yet" << endl;
-      return *this;
-   }
-
    // CONSTANT MEMBER FUNCTIONS
    sequence::size_type sequence::size() const
    {
-      cout << "size() not implemented yet" << endl;
-      return 0; // dummy value returned
+      return used; 
    }
 
    bool sequence::is_item() const
    {
-      cout << "is_item() not implemented yet" << endl;
-      return false; // dummy value returned
+      return current_index < used;
    }
 
    sequence::value_type sequence::current() const
    {
-      cout << "current() not implemented yet" << endl;
-      return value_type(); // dummy value returned
+      return data[current_index]; 
    }
 }
 

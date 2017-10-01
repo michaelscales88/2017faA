@@ -1,0 +1,55 @@
+Running tests for sequence class with a dynamic array
+
+START OF TEST 1:
+Testing insert, attach, and the constant member functions (4 points).
+Starting with an empty sequence.
+Testing that size() returns 0 ... Passed.
+Testing that is_item() returns false ... Passed.
+I'll call start() and look at the items one more time...
+All tests passed for this sequence.
+
+I am now using attach to put 10 into an empty sequence.
+Testing that size() returns 1 ... Passed.
+Testing that is_item() returns true ... Failed.
+Basic test of size() or is_item() failed.
+
+Test 1 failed.
+END OF TEST 1.
+
+
+START OF TEST 2:
+Testing situations where the cursor goes off the sequence (4 points).
+Using attach to put 20 and 30 in the sequence, and then calling
+advance, so that is_item should return false ... passed.
+Inserting 10, which should go at the sequence's front.
+Then calling advance three times to run cursor off the sequence ... passed.
+Calling attach to put the numbers 40, 50, 60 ...300 at the sequence's end.
+Now I will test that the sequence has 10, 20, 30, ...300.
+    Test failed to find 10
+Test 2 failed.
+END OF TEST 2.
+
+
+START OF TEST 3:
+Testing remove_current (4 points).
+Using attach to build a sequence with 10,30.
+Insert a 20 before the 30, so entire sequence is 10,20,30.
+Testing that size() returns 3 ... Passed.
+Testing that is_item() returns true ... Passed.
+The cursor should be at item [1] of the sequence
+(counting the first item as [0]). I will advance the cursor
+to the end of the sequence, checking that each item is correct...
+    Cursor fell off the sequence too soon.
+Failed.
+Test of the sequence's items failed.
+
+Test 3 failed.
+END OF TEST 3.
+
+
+START OF TEST 4:
+Testing the resize member function (2 points).
+I will now resize a sequence to a larger capacity, and then
+attach that many items. The sequence should NOT need to
+resize itself under this situation.
+    sequence does not contain correct items.

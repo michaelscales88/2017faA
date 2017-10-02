@@ -45,6 +45,12 @@ using namespace std;
 
 namespace CS3358_FA2017
 {
+   void sequence::print()
+   {
+      for (int i = 0; i < used; i++)
+         cout << " " << data[i];
+      cout << endl;
+   }
    // CONSTRUCTORS and DESTRUCTOR
    sequence::sequence(size_type initial_capacity)
       :used(0),
@@ -63,7 +69,7 @@ namespace CS3358_FA2017
    {
       data = new(nothrow) value_type[capacity];
 
-      for (int i = 0; i < used; i++)
+      for (size_type i = 0; i < used; i++)
          data[i] = source.data[i];
    }
 
@@ -83,7 +89,7 @@ namespace CS3358_FA2017
          if (new_capacity < used) new_capacity = used; 
 
          value_type* tempArray = new(nothrow) value_type[new_capacity];
-         for (int i = 0; i < used; ++i)
+         for (size_type i = 0; i < used; i++)
             tempArray[i] = data[i];
 
          delete [] data;
@@ -105,8 +111,10 @@ namespace CS3358_FA2017
    void sequence::insert(const value_type& entry)
    {
       if (used == capacity) resize(capacity * 1.25 + 1);
-      // Check for empty sequence
-      if (!used && !current_index)
+      bool empty = !used && !current_index;
+      bool lastIndex = current_index == used;
+      // No shift cases
+      if (empty || lastIndex)
       {
          data[current_index] = entry;
          used++;
@@ -114,7 +122,7 @@ namespace CS3358_FA2017
       else
       {
          used++;
-         for (int i = used - 1; i > current_index; i--)
+         for (size_type i = used - 1; i > current_index; i--)
             data[i] = data[i - 1];
          data[current_index] = entry;
       }
@@ -123,8 +131,10 @@ namespace CS3358_FA2017
    void sequence::attach(const value_type& entry)
    {
       if (used == capacity) resize(capacity * 1.25 + 1);
-      // Check for empty sequence
-      if (!used && !current_index)
+      bool empty = !used && !current_index;
+      bool lastIndex = current_index == used;
+      // No shift cases
+      if (empty || lastIndex)
       {
          data[current_index] = entry;
          used++;
@@ -132,9 +142,9 @@ namespace CS3358_FA2017
       else
       {
          used++;
-         advance();
-         for (int i = used - 1; i > current_index; i--)
+         for (size_type i = used - 1; i > current_index + 1; i--)
             data[i] = data[i - 1];
+         advance();
          data[current_index] = entry;
       }
    }
@@ -143,7 +153,7 @@ namespace CS3358_FA2017
    {
       if (is_item())
       {
-         for (int i = current_index; i < used - 1; i++)
+         for (size_type i = current_index; i < used - 1; i++)
             data[i] = data[i + 1];
          used--;
       }
@@ -154,7 +164,7 @@ namespace CS3358_FA2017
       if (this != &source)
       {
          value_type* tempArray = new(nothrow) value_type[source.capacity];
-         for (int i = 0; i < source.used; i++)
+         for (size_type i = 0; i < source.used; i++)
             tempArray[i] = source.data[i];
 
          delete [] data;

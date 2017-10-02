@@ -81,10 +81,13 @@ Testing situations where the cursor goes off the sequence (4 points).
 Using attach to put 20 and 30 in the sequence, and then calling
 advance, so that is_item should return false ... passed.
 Inserting 10, which should go at the sequence's front.
-Then calling advance three times to run cursor off the sequence ... passed.
+Then calling advance three times to run cursor off the sequence ... 20 30 10
+ passed.
 Calling attach to put the numbers 40, 50, 60 ...300 at the sequence's end.
 Now I will test that the sequence has 10, 20, 30, ...300.
+ 20 30 10 40 50 60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230 240 250 260 270 280 290 300
     Test failed to find 10
+ 20 30 10 40 50 60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230 240 250 260 270 280 290 300
 Test 2 failed.
 END OF TEST 2.
 

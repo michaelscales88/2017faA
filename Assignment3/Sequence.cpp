@@ -47,24 +47,24 @@ namespace CS3358_FA2017
 {
    // CONSTRUCTORS and DESTRUCTOR
    sequence::sequence(size_type initial_capacity)
-      :used(0), current_index(0), capacity(initial_capacity) 
+      :used(0),
+      current_index(0),
+      capacity(initial_capacity)
    {
       if (capacity < 1) capacity = 1;
 
-      data = new value_type[capacity];
+      data = new(nothrow) value_type[capacity];
    }
 
    sequence::sequence(const sequence& source)
+      :used(source.used),
+      current_index(source.current_index), 
+      capacity(source.capacity)
    {
-      value_type* tempArray = new value_type[source.capacity];
-      for (int i = 0; i < source.used; i++)
-         tempArray[i] = source.data[i];
+      data = new(nothrow) value_type[capacity];
 
-      delete [] data;
-      data = tempArray;
-      used = source.used;
-      current_index = source.current_index;
-      capacity = source.capacity;
+      for (int i = 0; i < used; i++)
+         data[i] = source.data[i];
    }
 
    sequence::~sequence()
@@ -75,19 +75,20 @@ namespace CS3358_FA2017
    // MODIFICATION MEMBER FUNCTIONS
    void sequence::resize(size_type new_capacity)
    {
-      // 
-      if (new_capacity < used) new_capacity = used;
       if (new_capacity < 1) new_capacity = 1;
+      bool needsResize = (new_capacity != capacity) ? true : false;
 
-      if (new_capacity != capacity)
+      if (needsResize)
       {
-         value_type* tempArray = new value_type[new_capacity];
-         for (int i = 0; i < used; i++)
+         if (new_capacity < used) new_capacity = used; 
+
+         value_type* tempArray = new(nothrow) value_type[new_capacity];
+         for (int i = 0; i < used; ++i)
             tempArray[i] = data[i];
 
          delete [] data;
-         data = tempArray;
          capacity = new_capacity;
+         data = tempArray;
       }
    }
 
@@ -97,39 +98,62 @@ namespace CS3358_FA2017
    }
 
    void sequence::advance()
-   { 
+   {
       if (is_item()) current_index++;
    }
 
    void sequence::insert(const value_type& entry)
    {
-      used++;
-      for (int i = used - 1; i > current_index; i--)
-         data[i] = data[i - 1];
-      data[current_index] = entry;
+      if (used == capacity) resize(capacity * 1.25 + 1);
+      // Check for empty sequence
+      if (!used && !current_index)
+      {
+         data[current_index] = entry;
+         used++;
+      }
+      else
+      {
+         used++;
+         for (int i = used - 1; i > current_index; i--)
+            data[i] = data[i - 1];
+         data[current_index] = entry;
+      }
    }
 
    void sequence::attach(const value_type& entry)
    {
-      used++;
-      advance();
-      for (int i = used - 1; i > current_index; i--)
-         data[i] = data[i - 1];
-      data[current_index] = entry;
+      if (used == capacity) resize(capacity * 1.25 + 1);
+      // Check for empty sequence
+      if (!used && !current_index)
+      {
+         data[current_index] = entry;
+         used++;
+      }
+      else
+      {
+         used++;
+         advance();
+         for (int i = used - 1; i > current_index; i--)
+            data[i] = data[i - 1];
+         data[current_index] = entry;
+      }
    }
 
    void sequence::remove_current()
    {
-      for (int i = current_index; i < used; i++)
-         data[i] = data[i + 1];
-      used--;
+      if (is_item())
+      {
+         for (int i = current_index; i < used - 1; i++)
+            data[i] = data[i + 1];
+         used--;
+      }
    }
 
    sequence& sequence::operator=(const sequence& source)
    {
       if (this != &source)
       {
-         value_type* tempArray = new value_type[source.capacity];
+         value_type* tempArray = new(nothrow) value_type[source.capacity];
          for (int i = 0; i < source.used; i++)
             tempArray[i] = source.data[i];
 
@@ -150,7 +174,7 @@ namespace CS3358_FA2017
 
    bool sequence::is_item() const
    {
-      return current_index < used;
+      return used > current_index;
    }
 
    sequence::value_type sequence::current() const

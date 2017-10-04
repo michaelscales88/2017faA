@@ -119,7 +119,6 @@ namespace CS3358_FA2017
       size_type size() const;
       bool is_item() const;
       value_type current() const;
-      void print();
    private:
       value_type* data;
       size_type used;

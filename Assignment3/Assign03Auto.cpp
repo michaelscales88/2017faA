@@ -263,7 +263,6 @@ int test2()
     cout << "Then calling advance three times to run cursor off the sequence ...";
     cout.flush();
     test.insert(10);
-    test.print();
     test.advance(); // advance to the 20
     test.advance(); // advance to the 30
     test.advance(); // advance right off the sequence
@@ -285,13 +284,11 @@ int test2()
     cout << "Now I will test that the sequence has 10, 20, 30, ...";
     cout << test.DEFAULT_CAPACITY*10 << "." << endl;
     test.start();
-    test.print();
     for (i = 1; i <= test.DEFAULT_CAPACITY; i++)
     {
         if ((!test.is_item()) || test.current() != i*10)
         {
             cout << "    Test failed to find " << i*10 << endl;
-            test.print();
             return 0;
         }
         test.advance();

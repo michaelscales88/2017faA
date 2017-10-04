@@ -82,9 +82,8 @@ namespace CS3358_FA2017
    void sequence::resize(size_type new_capacity)
    {
       if (new_capacity < 1) new_capacity = 1;
-      bool needsResize = (new_capacity != capacity) ? true : false;
-
-      if (needsResize)
+      bool needs_resize = (new_capacity != capacity) ? true : false;
+      if (needs_resize)
       {
          if (new_capacity < used) new_capacity = used; 
 
@@ -111,17 +110,15 @@ namespace CS3358_FA2017
    void sequence::insert(const value_type& entry)
    {
       if (used == capacity) resize(capacity * 1.25 + 1);
-      bool empty = !used && !current_index;
-      bool lastIndex = current_index == used;
-      // No shift cases
-      if (empty || lastIndex)
-      {
-         data[current_index] = entry;
-         used++;
-      }
+      bool empty = !used && !current_index,
+           last_index = current_index == used;
+      used++;
+      // No-shift cases
+      if (empty) data[current_index] = entry;
+      // Shift cases
       else
       {
-         used++;
+         if (last_index) current_index = 0;
          for (size_type i = used - 1; i > current_index; i--)
             data[i] = data[i - 1];
          data[current_index] = entry;
@@ -131,17 +128,15 @@ namespace CS3358_FA2017
    void sequence::attach(const value_type& entry)
    {
       if (used == capacity) resize(capacity * 1.25 + 1);
-      bool empty = !used && !current_index;
-      bool lastIndex = current_index == used;
-      // No shift cases
-      if (empty || lastIndex)
-      {
-         data[current_index] = entry;
-         used++;
-      }
+      bool empty = !used && !current_index, 
+           last_index = current_index == used;
+      used++;
+      // No-shift cases
+      if (empty) data[current_index] = entry;
+      else if (last_index) data[current_index] = entry;
+      // Shift cases
       else
       {
-         used++;
          for (size_type i = used - 1; i > current_index + 1; i--)
             data[i] = data[i - 1];
          advance();

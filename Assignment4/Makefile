@@ -6,7 +6,7 @@ sequenceTest.o: sequenceTest.cpp sequence.template sequence.h
 test:
 	./a4 auto < a4test.in > a4test.out
 clean:
-	@rm -rf sequenceTest.o
+	@rm -rf sequenceTest.o sequence.o
 cleanall:
-	@rm -rf sequenceTest.o a4
+	@rm -rf sequenceTest.o sequence.o a4
 

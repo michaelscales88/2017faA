@@ -1,0 +1,127 @@
+An empty sequence of real numbers (s1) and
+an empty sequence of characters (s2) have been created.
+Enter a char value.You entered !
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 1
+s1 started
+Enter a char value.You entered +
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 2
+Can't advance s2.
+Enter a char value.You entered ?
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 1
+s1 has no current item.
+Enter a char value.You entered c
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 2
+s2 has no current item.
+Enter a char value.You entered p
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 1
+s1 is empty.
+Enter a char value.You entered s
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 2
+Size of s2 is: 0
+Enter a char value.You entered a
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 1
+Enter a number value.You entered 5.5
+5.5 added to s1.
+Enter a char value.You entered a
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 2
+Enter a character value.You entered e
+e added to s2.
+Enter a char value.You entered a
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 1
+Enter a number value.You entered 3.3
+3.3 added to s1.
+Enter a char value.You entered a
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 2
+Enter a character value.You entered c
+c added to s2.
+Enter a char value.You entered a
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 1
+Enter a number value.You entered 7.7
+7.7 added to s1.
+Enter a char value.You entered a
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 2
+Enter a character value.You entered g
+g added to s2.
+Enter a char value.You entered a
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 1
+Enter a number value.You entered 4.4
+4.4 added to s1.
+Enter a char value.You entered a
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 2
+Enter a character value.You entered d
+d added to s2.
+Enter a char value.You entered a
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 1
+Enter a number value.You entered 6.6
+6.6 added to s1.
+Enter a char value.You entered a
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 2
+Enter a character value.You entered f
+f added to s2.
+Enter a char value.You entered !
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 1
+s1 started
+Enter a char value.You entered -
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 1
+Moved s1 back one item.
+Enter a char value.You entered a
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 1
+Enter a number value.You entered 0
+0 added to s1.
+Enter a char value.You entered -
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 2
+Moved s2 back one item.
+Enter a char value.You entered a
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 2
+Enter a character value.You entered e
+e added to s2.
+Enter a char value.You entered &
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 1
+s1 ended
+Enter a char value.You entered -
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 1
+Moved s1 back one item.
+Enter a char value.You entered a
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 1
+Enter a number value.You entered 5.5
+5.5 added to s1.
+Enter a char value.You entered !
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 2
+s2 started
+Enter a char value.You entered &
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 2
+s2 ended
+Enter a char value.You entered a
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 2
+Enter a character value.You entered a
+a added to s2.
+Enter a char value.You entered p
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 1
+s1: 0  5.5  3.3  7.7  4.4  5.5  6.6  
+Enter a char value.You entered p
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 2
+s2: e  c  g  d  e  f  a  
+Enter a char value.You entered !
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 1
+s1 started
+Enter a char value.You entered r
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 1
+0 removed from s1.
+Enter a char value.You entered !
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 2
+s2 started
+Enter a char value.You entered +
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 2
+Advanced s2 one item.
+Enter a char value.You entered +
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 2
+Advanced s2 one item.
+Enter a char value.You entered +
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 2
+Advanced s2 one item.
+Enter a char value.You entered r
+Enter object # (1 = s1, 2 = s2) Enter a integer value.You entered 2
+d removed from s2.
+Enter a char value.You entered q
+Quit option selected...bye
+Press Enter or Return when ready...

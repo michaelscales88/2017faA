@@ -3,9 +3,10 @@
 
 #include <cctype>      // provides toupper
 #include <iostream>    // provides cout and cin
-#include <cstring>
 #include <cstdlib>     // provides EXIT_SUCCESS
 #include "sequence.h"
+namespace seqOfNum  = CS3358_FA17_A04_sequenceOfNum;
+namespace seqOfChar = CS3358_FA17_A04_sequenceOfChar;
 using namespace std;
 
 // PROTOTYPES for functions used by this test program:
@@ -18,6 +19,12 @@ char get_user_command();
 // Post: The user is prompted to enter a one character command.
 //       The next character is read (skipping blanks and newline
 //       characters), and this character is returned.
+void show_list(seqOfNum::sequence src);
+// Pre: (none)
+// Post: The items of src are printed to cout (one per line).
+void show_list(seqOfChar::sequence src);
+// Pre: (none)
+// Post: The items of src are printed to cout (one per line).
 int get_object_num();
 // Pre:  (none)
 // Post: The user is prompted to enter either 1 or 2. The
@@ -26,27 +33,29 @@ int get_object_num();
 //       integer read is returned. The input buffer is cleared
 //       of any extra input until and including the first
 //       newline character.
-template <typename Item>
-Item get_value(string type, Item& result);
+double get_number();
 // Pre:  (none)
-// Post: The user is prompted to enter a value of type Item. The 
-//       prompt is repeated until a valid Item can be read. The
-//       valid Item read is returned. The input buffer is
+// Post: The user is prompted to enter a real number. The prompt
+//       is repeated until a valid real number can be read. The
+//       valid real number read is returned. The input buffer is
 //       cleared of any extra input until and including the
 //       first newline character.
-template <typename Item>
-void show_list(Item& src);
-// Pre: (none)
-// Post: The items of src are printed to cout (one per line).
+char get_character();
+// Pre:  (none)
+// Post: The user is prompted to enter a non-whitespace character.
+//       The prompt is repeated until a non-whitespace character
+//       can be read. The non-whitespace character read is returned.
+//       The input buffer is cleared of any extra input until and
+//       including the first newline character.
 
 int main(int argc, char *argv[])
 {
-   Sequence<double> s1; // A sequence of double for testing
-   Sequence<char> s2;   // A sequence of char for testing
-   int objectNum;       // A number to indicate selection of s1 or s2
-   double numHold;      // Holder for a real number
-   char charHold;       // Holder for a character
-   char choice;         // A command character entered by the user
+   seqOfNum::sequence s1;  // A sequence of double for testing
+   seqOfChar::sequence s2; // A sequence of char for testing
+   int objectNum;    // A number to indicate selection of s1 or s2
+   double numHold;   // Holder for a real number
+   char charHold;    // Holder for a character
+   char choice;      // A command character entered by the user
 
    cout << "An empty sequence of real numbers (s1) and\n"
         << "an empty sequence of characters (s2) have been created."
@@ -203,13 +212,13 @@ int main(int argc, char *argv[])
             objectNum = get_object_num();
             if (objectNum == 1)
             {
-               get_value("number", numHold);
+               numHold = get_number();
                s1.add(numHold);
                cout << numHold << " added to s1." << endl;
             }
             else
             {
-               get_value("character", charHold);
+               charHold = get_character();
                s2.add(charHold);
                cout << charHold << " added to s2." << endl;
             }
@@ -274,7 +283,25 @@ void print_menu()
 char get_user_command()
 {
    char command;
-   return get_value("char", command);
+
+   cout << "Enter choice: ";
+   cin >> command;
+
+   cout << "You entered ";
+   cout << command << endl;
+   return command;
+}
+
+void show_list(seqOfNum::sequence src)
+{
+   for ( src.start(); src.is_item(); src.advance() )
+      cout << src.current() << "  ";
+}
+
+void show_list(seqOfChar::sequence src)
+{
+   for ( src.start(); src.is_item(); src.advance() )
+      cout << src.current() << "  ";
 }
 
 int get_object_num()
@@ -282,40 +309,76 @@ int get_object_num()
    int result;
 
    cout << "Enter object # (1 = s1, 2 = s2) ";
-   get_value("integer", result);
-
-   while (result != 1 && result != 2)
-   {
-      cout << "Invalid selection. Enter a number 1 or 2." << endl;
-      cout << "Enter object # (1 = s1, 2 = s2)" << endl;
-      get_value("integer", result);
-   }
-   return result;
-}
-
-template <typename Item>
-Item get_value(string type, Item& result)
-{
-   cout << "Enter a " << type << " value.";
    cin  >> result;
    while ( ! cin.good() )
    {
-      cerr << "Invalid " << type << " input..." << endl;
+      cerr << "Invalid integer input..." << endl;
       cin.clear();
       cin.ignore(999, '\n');
-      cout << "Re-enter a " << type << " value.";
+      cout << "Re-enter object # (1 = s1, 2 = s2) ";
       cin  >> result;
    }
-   //cin.ignore(999, '\n');
+   // cin.ignore(999, '\n');
+
+   while (result != 1 && result != 2)
+   {
+      cin.ignore(999, '\n');
+      cerr << "Invalid object # (must be 1 or 2)..." << endl;
+      cout << "Re-enter object # (1 = s1, 2 = s2) ";
+      cin  >> result;
+      while ( ! cin.good() )
+      {
+         cerr << "Invalid integer input..." << endl;
+         cin.clear();
+         cin.ignore(999, '\n');
+         cout << "Re-enter object # (1 = s1, 2 = s2) ";
+         cin  >> result;
+      }
+      // cin.ignore(999, '\n');
+   }
+
    cout << "You entered ";
    cout << result << endl;
    return result;
 }
 
-template <typename Item>
-void show_list(Item& src)
+double get_number()
 {
-   for ( src.start(); src.is_item(); src.advance() )
-      cout << src.current() << "  ";
+   double result;
+
+   cout << "Enter a real number: ";
+   cin  >> result;
+   while ( ! cin.good() )
+   {
+      cerr << "Invalid real number input..." << endl;
+      cin.clear();
+      cin.ignore(999, '\n');
+      cout << "Re-enter a real number ";
+      cin  >> result;
+   }
+   // cin.ignore(999, '\n');
+
+   cout << "You entered ";
+   cout << result << endl;
+   return result;
 }
 
+char get_character()
+{
+   char result;
+
+   cout << "Enter a non-whitespace character: ";
+   cin  >> result;
+   while ( ! cin )
+   {
+      cerr << "Invalid non-whitespace character input..." << endl;
+      cin.ignore(999, '\n');
+      cout << "Re-enter a non-whitespace character: ";
+      cin  >> result;
+   }
+   // cin.ignore(999, '\n');
+
+   cout << "You entered ";
+   cout << result << endl;
+   return result;
+}

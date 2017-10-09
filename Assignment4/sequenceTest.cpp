@@ -27,7 +27,7 @@ int get_object_num();
 //       of any extra input until and including the first
 //       newline character.
 template <typename Item>
-Item get_value(string type, Item& result);
+Item get_value(string type, Item result);
 // Pre:  (none)
 // Post: The user is prompted to enter a value of type Item. The 
 //       prompt is repeated until a valid Item can be read. The
@@ -294,7 +294,7 @@ int get_object_num()
 }
 
 template <typename Item>
-Item get_value(string type, Item& result)
+Item get_value(string type, Item result)
 {
    cout << "Enter a " << type << " value.";
    cin  >> result;

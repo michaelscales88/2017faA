@@ -83,34 +83,36 @@
 #define SEQUENCE_H
 
 
-template <typename Item>
-class Sequence
+namespace CS3358_FA17_A04_sequence_template
 {
-   public:
-      // CONSTRUCTOR
-      Sequence();
-      // TYPEDEFS and MEMBER CONSTANTS
-      typedef Item value_type;
-      typedef size_t size_type;
-      static const size_type CAPACITY = 10;
-      // MODIFICATION MEMBER FUNCTIONS
-      void start();
-      void end();
-      void advance();
-      void move_back();
-      void add(const value_type& entry);
-      void remove_current();
-      // CONSTANT MEMBER FUNCTIONS
-      size_type size() const;
-      bool is_item() const;
-      Item current() const;
-   private:
-      value_type data[CAPACITY];
-      size_type used;
-      size_type current_index;
-};
+   template <typename Item>
+   class Sequence
+   {
+      public:
+         // CONSTRUCTOR
+         Sequence();
+         // TYPEDEFS and MEMBER CONSTANTS
+         typedef Item value_type;
+         typedef size_t size_type;
+         static const size_type CAPACITY = 10;
+         // MODIFICATION MEMBER FUNCTIONS
+         void start();
+         void end();
+         void advance();
+         void move_back();
+         void add(const value_type& entry);
+         void remove_current();
+         // CONSTANT MEMBER FUNCTIONS
+         size_type size() const;
+         bool is_item() const;
+         Item current() const;
+      private:
+         value_type data[CAPACITY];
+         size_type used;
+         size_type current_index;
+   };
+}
 
 #include "sequence.template"
-
 #endif
 

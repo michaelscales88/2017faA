@@ -6,6 +6,7 @@
 #include <cstring>
 #include <cstdlib>     // provides EXIT_SUCCESS
 #include "sequence.h"
+namespace sequence_template = CS3358_FA17_A04_sequence_template;
 using namespace std;
 
 // PROTOTYPES for functions used by this test program:
@@ -27,7 +28,7 @@ int get_object_num();
 //       of any extra input until and including the first
 //       newline character.
 template <typename Item>
-Item get_value(string type, Item result);
+Item get_value(string type);
 // Pre:  (none)
 // Post: The user is prompted to enter a value of type Item. The 
 //       prompt is repeated until a valid Item can be read. The
@@ -41,12 +42,12 @@ void show_list(Item& src);
 
 int main(int argc, char *argv[])
 {
-   Sequence<double> s1; // A sequence of double for testing
-   Sequence<char> s2;   // A sequence of char for testing
-   int objectNum;       // A number to indicate selection of s1 or s2
-   double numHold;      // Holder for a real number
-   char charHold;       // Holder for a character
-   char choice;         // A command character entered by the user
+   sequence_template::Sequence<double> s1;   // A sequence of double for testing
+   sequence_template::Sequence<char> s2;     // A sequence of char for testing
+   int objectNum;                            // Number selection for s1 or s2
+   double numHold;                           // Holder for a real number
+   char charHold;                            // Holder for a character
+   char choice;                              // User entered char for commands
 
    cout << "An empty sequence of real numbers (s1) and\n"
         << "an empty sequence of characters (s2) have been created."
@@ -203,13 +204,13 @@ int main(int argc, char *argv[])
             objectNum = get_object_num();
             if (objectNum == 1)
             {
-               get_value("number", numHold);
+               numHold = get_value<int>("number");
                s1.add(numHold);
                cout << numHold << " added to s1." << endl;
             }
             else
             {
-               get_value("character", charHold);
+               charHold = get_value<char>("char");
                s2.add(charHold);
                cout << charHold << " added to s2." << endl;
             }
@@ -273,29 +274,27 @@ void print_menu()
 
 char get_user_command()
 {
-   char command;
-   return get_value("char", command);
+   return get_value<char>("char");
 }
 
 int get_object_num()
 {
-   int result;
-
    cout << "Enter object # (1 = s1, 2 = s2) ";
-   get_value("integer", result);
+   int result = get_value<int>("integer");
 
    while (result != 1 && result != 2)
    {
       cout << "Invalid selection. Enter a number 1 or 2." << endl;
       cout << "Enter object # (1 = s1, 2 = s2)" << endl;
-      get_value("integer", result);
+      result = get_value<int>("integer");
    }
    return result;
 }
 
 template <typename Item>
-Item get_value(string type, Item result)
+Item get_value(string type)
 {
+   Item result;
    cout << "Enter a " << type << " value.";
    cin  >> result;
    while ( ! cin.good() )

@@ -204,13 +204,15 @@ int main(int argc, char *argv[])
             objectNum = get_object_num();
             if (objectNum == 1)
             {
-               numHold = get_value<int>("number");
+               cout << "Enter a real number: ";
+               numHold = get_value<double>("real number");
                s1.add(numHold);
                cout << numHold << " added to s1." << endl;
             }
             else
             {
-               charHold = get_value<char>("char");
+               cout << "Enter a non-whitespace character: ";
+               charHold = get_value<char>("non-whitespace character");
                s2.add(charHold);
                cout << charHold << " added to s2." << endl;
             }
@@ -274,6 +276,7 @@ void print_menu()
 
 char get_user_command()
 {
+   cout << "Enter choice: ";
    return get_value<char>("char");
 }
 
@@ -292,17 +295,17 @@ int get_object_num()
 }
 
 template <typename Item>
-Item get_value(string type)
+Item get_value(string msg)
 {
    Item result;
-   cout << "Enter a " << type << " value.";
+   //cout << "Enter a " << msg << ": ";
    cin  >> result;
    while ( ! cin.good() )
    {
-      cerr << "Invalid " << type << " input..." << endl;
+      cerr << "Invalid " << msg << " input..." << endl;
       cin.clear();
       cin.ignore(999, '\n');
-      cout << "Re-enter a " << type << " value.";
+      cout << "Re-enter a " << msg << ": ";
       cin  >> result;
    }
    //cin.ignore(999, '\n');

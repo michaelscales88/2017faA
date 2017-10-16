@@ -1,0 +1,15 @@
+================================
+passed test on empty list
+0x7fd898c02660
+0x7fd898c02670
+0x7fd898c02680
+0x7fd898c02690
+0x7fd898c026a0
+0x7fd898c026b0
+0x7fd898c026c0
+0x7fd898c026d0
+================================
+List node-count error ... too few
+test_case 1: 9  3  8  0  2  4  8  3  
+#expected: 10
+#returned: 0

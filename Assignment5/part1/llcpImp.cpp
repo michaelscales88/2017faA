@@ -257,12 +257,15 @@ void RemOddDupEven(Node*& headPtr)
          new_node->data = cursor->data;
          new_node->link = cursor->link;
          cursor->link = new_node;
+         // precursor is null until
+         // we add for the first time
          precursor = new_node;
          cursor = new_node->link;
       } else
       {
          if (cursor == headPtr)
          {
+            // Delete first node
             headPtr = headPtr->link;
             delete cursor;
             cursor = headPtr;

@@ -268,6 +268,8 @@ void RemOddDupEven(Node*& headPtr)
             // Delete first node
             headPtr = headPtr->link;
             delete cursor;
+            // Set the cursor to the first node
+            // -> check what was the second node
             cursor = headPtr;
          } else
          {

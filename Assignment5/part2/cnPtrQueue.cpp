@@ -5,17 +5,44 @@ using namespace std;
 namespace CS3358_FA17_A5P2
 {
    // Constructor
-   cnPtrQueue::cnPtrQueue() {}
+   cnPtrQueue::cnPtrQueue()
+   :numItems(0) {}
 
    bool cnPtrQueue::empty() const { return numItems == 0; }
 
    cnPtrQueue::size_type cnPtrQueue::size() const { return numItems; }
 
-   CNode* cnPtrQueue::front() { return new CNode; }
+   CNode* cnPtrQueue::front()
+   {
+      if (outStack.empty())
+      {
+         while (!inStack.empty())
+         {
+            outStack.push( inStack.top() );
+            inStack.pop();
+         }
+      }
+      return outStack.top();
+   }
 
-   void cnPtrQueue::push(CNode* cnPtr) {}
+   void cnPtrQueue::push(CNode* cnPtr)
+   {
+      inStack.push(cnPtr);
+      numItems++;
+   }
 
-   void cnPtrQueue::pop() {}
-
+   void cnPtrQueue::pop()
+   {
+      if (outStack.empty())
+      {
+         while (!inStack.empty())
+         {
+            outStack.push( inStack.top() );
+            inStack.pop();
+         }
+      }
+      outStack.pop();
+      numItems--;
+   }
 }
 

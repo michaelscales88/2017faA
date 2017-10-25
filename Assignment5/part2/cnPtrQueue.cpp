@@ -16,6 +16,7 @@ namespace CS3358_FA17_A5P2
    {
       if (outStack.empty())
       {
+         // Flush inStack
          while (!inStack.empty())
          {
             outStack.push( inStack.top() );
@@ -35,6 +36,7 @@ namespace CS3358_FA17_A5P2
    {
       if (outStack.empty())
       {
+         // Flush inStack
          while (!inStack.empty())
          {
             outStack.push( inStack.top() );

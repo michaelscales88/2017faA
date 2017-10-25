@@ -60,6 +60,7 @@ namespace CS3358_FA17_A5P2
       CNode* cursor = 0;
       while (pListHead != 0)
       {
+         // Enqueue top level nodes
          if (pListHead->data != 0)
             queue.push(pListHead->data);
          pListHead = pListHead->link;
@@ -69,6 +70,7 @@ namespace CS3358_FA17_A5P2
          cursor = queue.front();
          queue.pop();
          outs << cursor->data << "  ";
+         // Enqueue deeper nodes
          if (cursor->link != 0)
             queue.push(cursor->link);
       }

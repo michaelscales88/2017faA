@@ -35,6 +35,7 @@ int bst_size(btNode* bst_root)
 void bst_insert(btNode*& bst_root, int insInt)
 {
    if (bst_root == 0) {
+      // Create root if bst is empty
       bst_root = new btNode();
       bst_root->data = insInt;
       bst_root->left = bst_root->right = 0;
@@ -105,10 +106,13 @@ bool bst_remove(btNode*& bst_root, int remInt)
 void bst_remove_max(btNode*& bst_root, int& remInt)
 {
    // Base case
-   if (bst_root->right == 0) {
-      remInt = bst_root->data;
-      btNode* cursor = bst_root;
-      bst_root = bst_root->left;
-      delete cursor;
-   } else bst_remove_max(bst_root->right, remInt);
+   if (bst_root != 0) {
+      // Max value
+      if (bst_root->right == 0) {
+         remInt = bst_root->data;
+         btNode* cursor = bst_root;
+         bst_root = bst_root->left;
+         delete cursor;
+      } else bst_remove_max(bst_root->right, remInt);
+   }
 }

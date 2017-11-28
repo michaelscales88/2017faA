@@ -129,11 +129,11 @@ namespace CS3358_FA17A7
       heap[used].priority = priority;
       // Reheapify
       size_type idx = used;
+      used++;
       while (idx != 0 && parent_priority(idx) < heap[idx].priority) {
          swap_with_parent(idx);
          idx = parent_index(idx);
       }
-      used++;
    }
 
    void p_queue::pop()

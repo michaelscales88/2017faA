@@ -181,7 +181,7 @@ namespace CS3358_FA17A7
    {
       if (new_capacity == used) new_capacity = used;
       ItemType *temp = new ItemType[new_capacity];
-      for (int i = 0; i < used; i++)
+      for (size_type i = 0; i < used; i++)
          temp[i] = heap[i];
 
       delete [] heap;

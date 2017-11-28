@@ -204,7 +204,7 @@ namespace CS3358_FA17A7
    // Post: The index of "the parent of the item at heap[i]" has
    //       been returned.
    {
-      assert((i > 0) && (i < used));
+      assert(i > 0 && i < used);
       return static_cast<size_type>((i - 1) / 2);
    }
 
@@ -214,7 +214,7 @@ namespace CS3358_FA17A7
    // Post: The priority of "the parent of the item at heap[i]" has
    //       been returned.
    {
-      assert((i > 0) && (i < used));
+      assert(i > 0 && i < used);
       return heap[parent_index(i)].priority;
    }
 
@@ -249,7 +249,7 @@ namespace CS3358_FA17A7
    // Pre:  (i > 0) && (i < used)
    // Post: The item at heap[i] has been swapped with its parent.
    {
-      assert((i > 0) && (i < used));
+      assert(i > 0 && i < used);
       size_type p_idx = parent_index(i);
       ItemType temp = heap[p_idx];
       heap[p_idx] = heap[i];

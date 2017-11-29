@@ -130,7 +130,11 @@ namespace CS3358_FA17A7
       // Reheapify
       size_type idx = used;
       used++;
+<<<<<<< HEAD
       while (idx > 0 && parent_priority(idx) < heap[idx].priority) {
+=======
+      while (idx != 0 && parent_priority(idx) < heap[idx].priority) {
+>>>>>>> a9346ae7921f708e16f17a77f0989dc53ede236b
          swap_with_parent(idx);
          idx = parent_index(idx);
       }

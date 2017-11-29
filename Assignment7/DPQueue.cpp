@@ -129,11 +129,11 @@ namespace CS3358_FA17A7
       heap[used].priority = priority;
       // Reheapify
       size_type idx = used;
-      while (idx != 0 && parent_priority(idx) < heap[idx].priority) {
+      used++;
+      while (idx > 0 && parent_priority(idx) < heap[idx].priority) {
          swap_with_parent(idx);
          idx = parent_index(idx);
       }
-      used++;
    }
 
    void p_queue::pop()
@@ -143,8 +143,9 @@ namespace CS3358_FA17A7
          used--;
          size_type idx = 0,
                    s_idx;
+         // Push lower priority items down the heap
          while (!is_leaf(idx)
-                && heap[idx].priority <= big_child_priority(idx)) {
+                && big_child_priority(idx) > heap[idx].priority) {
             s_idx = big_child_index(idx);
             swap_with_parent(s_idx);
             idx = s_idx;
@@ -153,7 +154,6 @@ namespace CS3358_FA17A7
    }
 
    // CONSTANT MEMBER FUNCTIONS
-
    p_queue::size_type p_queue::size() const
    {
       return used;
@@ -195,7 +195,7 @@ namespace CS3358_FA17A7
    //       returned, otherwise false has been returned.
    {
       assert(i < used);
-      return used < (i * 2 + 1);
+      return (i * 2 + 1) >= used;
    }
 
    p_queue::size_type
@@ -227,10 +227,25 @@ namespace CS3358_FA17A7
    //       than that of the other child, if there is one.)
    {
       assert(is_leaf(i) == false);
-      size_type lc_idx = i * 2 + 1,
-                rc_idx = i * 2 + 2;
-      return (used < rc_idx
-              && heap[lc_idx].priority <= heap[rc_idx].priority) ? rc_idx: lc_idx;
+      size_type rtn_idx;
+      if (i == 0) {
+         // Case 1: Only has left child
+         if (used == 2) rtn_idx = 1;
+         // Case 2: Has left and right child
+         else rtn_idx = (heap[1].priority >= heap[2].priority) ? 1 : 2;
+      } else {
+         size_type lc_idx = i * 2 + 1,
+                   rc_idx = i * 2 + 2;
+         // Case 1: Only has left child
+         if (rc_idx > used) rtn_idx = lc_idx;
+         // Case 2: Has left and right child
+         else {
+            if (heap[lc_idx].priority >= heap[rc_idx].priority)
+               rtn_idx = lc_idx;
+            else rtn_idx = rc_idx;
+         }
+      }
+      return rtn_idx;
    }
 
    p_queue::size_type

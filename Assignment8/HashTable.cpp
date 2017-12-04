@@ -12,7 +12,21 @@ using namespace std;
 // (HINT: put next_prime and insert to good use)
 void HashTable::rehash()
 {
-   // to be implemented as part of Assignment 8
+   // Store information to rehash
+   size_type old_capacity = capacity;
+   Item* old_data = data;
+
+   // New hashtable
+   capacity = next_prime(capacity*2);
+   data = new Item[capacity];
+   for (size_type i = 0; i < capacity; ++i)
+      strcpy(data[i].word, "");
+   used = 0;
+
+   // Hash old data into hashtable
+   for (size_type i = 0; i < old_capacity; ++i)
+      if (old_data[i].word[0] != '\0') insert(old_data[i].word);
+   delete [] old_data;
 }
 
 // returns true if cStr already exists in the hash table,
@@ -31,7 +45,21 @@ bool HashTable::exists(const char* cStr) const
 // CAUTION: major penalty if not using hashing technique
 bool HashTable::search(const char* cStr) const
 {
-   // to be implemented as part of Assignment 8
+   bool found = false;
+   size_type i = hash(cStr);
+   if (! strcmp(data[i].word, cStr)) found = true;
+   else {
+      size_type step = 1,
+                ins_loc = (i + step*step) % capacity;
+      while (!found && data[ins_loc].word[0] != '\0') {
+         if (! strcmp(data[ins_loc].word, cStr)) found = true;
+         else {
+            step++;
+            ins_loc = (i + step*step) % capacity;
+         }
+      }
+   }
+   return found;
 }
 
 // returns load-factor calculated as a fraction
@@ -42,7 +70,10 @@ double HashTable::load_factor() const
 // (2nd page of Lecture Note 324s02AdditionalNotesOnHashFunctions)
 HashTable::size_type HashTable::hash(const char* word) const
 {
-   // to be implemented as part of Assignment 8
+   unsigned long hash = 5381;
+   int c;
+   while ((c = *word++)) hash = ((hash << 5) + hash) + c; //hash*33 + c
+   return hash % capacity;
 }
 
 // constructs an empty initial hash table
@@ -120,7 +151,19 @@ void HashTable::grading_helper_print(ostream& out) const
 // rehash is called to bring down the load-factor)
 void HashTable::insert(const char* cStr)
 {
-   // to be implemented as part of Assignment 8
+   size_type i = hash(cStr);
+   if (data[i].word[0] == '\0') strcpy(data[i].word, cStr);
+   else {
+      size_type step = 1,
+                ins_loc = (i + step*step) % capacity;
+      while (data[ins_loc].word[0] != '\0') {
+         step++;
+         ins_loc = (i + step*step) % capacity;
+      }
+      strcpy(data[ins_loc].word, cStr);
+   }
+   used++;
+   if (load_factor() > 0.45) rehash();
 }
 
 // adaption of : http://stackoverflow.com/questions/4475996
